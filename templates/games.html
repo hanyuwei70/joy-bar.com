@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+    <style>
+        #intro-games ul{
+            width:100%;
+            height: auto;
+            list-style: none;
+        }
+        #intro-games ul::after{
+            content: "";
+            clear: both;
+            display:table;
+        }
+        #intro-games li{
+            overflow: auto;
+            float:left;
+            width:20%;
+            font-size:18px;
+            margin:0.5em 0;
+            font-weight: bold;
+        }
+
+    </style>
+    <div id="intro-games" class="optbackground">
+        <h2>提供的游戏</h2>
+        <ul>
+            <li>狼人杀（普通+新月）</li><li>三国杀（带扩展包）</li><li>德国心脏病</li><li>通缉令</li><li>天黑请闭眼</li><li>抵抗组织</li><li>南瓜旅店2</li><li>UNO</li><li>魔城马车</li><li>拼布游戏</li><li>昆虫棋</li><li>犯罪现场</li><li>矮人金矿</li><li>跑跑龟</li><li>密室惊魂</li><li>达芬奇密码</li><li>情书</li><li>富饶之城</li><li>怒海求生</li><li>爆炸猫咪</li><li>阿瓦隆</li><li>谁是卧底</li><li>方格游戏</li><li>只言片语</li><li>马尼拉</li><li>DICE FORGE</li><li>步步为营</li><li>波多黎各</li><li>伊斯坦堡</li><li>太阳神的祭祀</li><li>奥尔良</li><li>瘟疫危机</li><li>香料之路</li><li>璀璨宝石</li><li>杰克先生</li><li>卡卡城</li><li>卡卡颂</li><li>卡坦岛</li><li>大老板</li><li>时间守望</li><li>农场主</li><li>东方快车</li><li>车票之旅</li><li>权利的游戏</li><li>殖民火星</li><li>新洛杉矶</li>
+            <li style="font-weight: normal;font-size:14px;"><i>更多游戏敬请期待...</i></li>
+        </ul>
+        <h2>附加服务</h2>
+        <p>狼人杀提供上帝/陪玩</p>
+    </div>
+{% endblock %}

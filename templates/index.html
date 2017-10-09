@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+{% block content %}
+    <div id="container" class="row">
+    <h1>JOY BAR 桌游馆欢迎您  <small style="background: rgba(255,255,255,0.6);border-radius: 3px; padding:5px;">上海市闵行区东川路2151号</small></h1>
+    <style>
+    #slider-pic{
+        width:75%;
+    }
+    h1{
+        text-align: center;
+        font-size: 48px;
+        margin-bottom: 1em;
+    }
+        #slider-pic{
+            margin-left:auto;
+            margin-right:auto;
+        }
+    </style>
+    <div id="slider-pic" class="carousel slide " data-interval="5000">
+    <ol class="carousel-indicators">
+        <li data-target="#slider-pic" data-slide-to="0" class="active"></li>
+        {% for i in range(1,10) %}
+            <li data-target="#slider-pic" data-slide-to="{{ i }}" ></li>
+        {% endfor %}
+    </ol>
+    <div class="carousel-inner">
+        <div class="item active">
+            <img class="img-responsive img-thumbnail" src="{{ url_for('static',filename="img/gate.jpg") }}" />
+        </div>
+        {% for i in range(1,10) %}
+            <div class="item">
+            <img class="img-responsive img-thumbnail" src="{{ url_for('static',filename="img/"+i|string+".jpg") }}" />
+            </div>
+        {% endfor %}
+    </div>
+    <a class="carousel-control left" href="#slider-pic" data-slide="prev"><span class="icon-prev" aria-hidden="true"></span></a>
+    <a class="carousel-control right" href="#slider-pic" data-slide="next"><span class="icon-next" aria-hidden="true"></span></a>
+    </div>
+    <style>
+        div#intro p{
+            font-size: 16px;
+        }
+    </style>
+    <div id="intro" class="optbackground">
+        <h1>关于我们</h1>
+        <p>JOY BAR 桌游是位于老闵行东川路2151号的桌游俱乐部，临近5号线东川路/金平路地铁站，整体干净舒适，桌游应有尽有，适合聚会，休闲和娱乐活动，更有多种饮料和零食畅饮畅吃。</p>
+        <p>本店桌游种类丰富，从新手级的《uno》《情书》《矮人矿工》还是入门级的《马尼拉》《卡坦岛》《璀璨宝石》，或者重度玩家喜爱的《权利的游戏》《历史巨轮》《时空守卫》等，应有尽有。我们会紧跟桌游界最新动态，快速更新桌游种类。</p>
+        <p>对于最近热门的狼人杀，我们提供上帝和陪玩服务，也能帮助单人玩家拼桌组局。无论是团体玩家还是个人玩家都能体验到游戏的乐趣！</p>
+    </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="https://cdn.bootcss.com/bootstrap/3.2.0/js/carousel.min.js"></script>
+{% endblock %}

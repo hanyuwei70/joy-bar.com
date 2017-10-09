@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title%}订单查询{% endblock %}
+{% block content %}
+    <div id="selection">
+        <form method="GET">
+        起始日期<input type="date" name="startdate" value="{{ startdate }}"/>
+        结束日期<input type="date" name="enddate" value="{{ enddate }}" />
+        <input type="submit" value="查询" />
+        </form>
+    </div>
+    <div id="result">
+    {% if orders is not none and orders|length is greaterthan 0%}
+        <table class="table table-hover">
+            <thead><tr>
+                <th>订单ID</th>
+                <th>日期</th>
+                <th>房间</th>
+                <th>小时数</th>
+                <th>称呼</th>
+                <th>电话</th></tr></thead>
+        <tbody>
+        {% for order in orders %}
+            <tr><td>{{ order.id }}</td>
+                <td>{{ order.date }}</td>
+                <td>{{ order.place }}</td>
+                <td>{% for hour in order.hours %}{{ hour }} {% endfor %}</td>
+                <td>{{ order.title }}</td>
+                <td>{{ order.tel }}</td></tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    {% else %}
+        没有订单可以显示
+    {% endif %}
+    </div>
+{% endblock %}

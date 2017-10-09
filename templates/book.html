@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}预订房间{% endblock %}
+{% block content %}
+<form id="order" method="post" role="form">
+    <label>房间选择</label>
+    <div id="roomSelection" class="form-group row">
+        {% for room in rooms %}
+            <label for="rd-room-{{ room.id }}" class="radio-inline col-xs-6 col-md-4 col-lg-3">
+                <input type="radio"
+                       id="rd-room-{{ room.id }}"
+                       onclick="updateHourSelection()"
+                       name="room"
+                       value="{{ room.id }}" />
+                {{ room.name }} ({% for type in roomtypes %}{% if type.id == room.type%}{{ type.name }}{% endif %}{% endfor %})
+            <img src="{{ url_for('static',filename="img/room"+room.id|string+".jpg") }}" class="img-responsive"/>
+            </label>
+        {% endfor %}
+    </div>
+    <label>预订日期(如果没有出现选择框则按照“年-月-日”填写)<input id="selectedDate" class="form-control" type="date" name="date"/></label>
+    <div id="hours">
+        {% for i in range(12,25) %}<button value="{{ i }}" class="btn btn-default">{{ i }}</button>{% endfor %}
+    </div>
+    <input type="hidden" name="hours" />
+    <label>手机 <input type="tel" class="form-control" autocomplete="tel" name="cellphone" maxlength="11" placeholder="请输入您的电话号码"/></label>
+    <label>称呼 <input type="text" class="form-control" autocomplete="name" name="title" placeholder="请输入你的称呼"/></label><br/>
+    <input type="submit" class="btn-lg" value="预订"/>
+</form>
+<p id="returnMessage">{% if result.error is defined %}{{ result.error }}{% endif %}</p>
+
+<script>
+    Date.prototype.yyyymmdd=function () {
+        const mm = this.getMonth() + 1;
+        const dd = this.getDate();
+
+        return [this.getFullYear(),
+            (mm>9 ? '' : '0') + mm,
+            (dd>9 ? '' : '0') + dd
+        ].join('-');
+    };
+    function formatParams( params ){
+        return "?" + Object
+            .keys(params)
+            .map(function(key){
+                return key+"="+encodeURIComponent(params[key])
+            })
+            .join("&")
+    }
+    const today=new Date();
+    document.getElementById("selectedDate").value=today.yyyymmdd();
+</script>
+{% endblock %}
+{% block js %}
+    <script>
+    $("div#hours").on("click",function (e) {
+        e.preventDefault();
+        if(e.target.nodeName!=="BUTTON") return;
+        if(e.target.classList.contains("btn-danger")) return;
+        e.target.classList.toggle("btn-success")
+    });
+    function update(){
+        let room=$('input[name=room]:checked').val();
+        $("#hours").find("button").removeClass("btn-danger btn-success");
+        if (room===undefined) return;
+        $.get('/query',{date:$("#selectedDate").val(),room:room},function(res,status){
+            if (status==="success"){
+                for (x of res){
+                    $("#hours button[value="+x+"]").addClass("btn-danger")
+                }
+            }else{
+                console.log("error on update()");
+            }
+        })
+    }
+    update();
+    $("#selectedDate").on("change",update);
+    $("#roomSelection").find("input").on("click",update);
+    $("#order").submit(function(){
+        let x=[];
+        $("#hours button.btn-success").each(function(){
+            x.push(this.value);
+        });
+        $("#order input[name=hours]").val(x.join(','));
+    })
+    </script>
+{% endblock %}
